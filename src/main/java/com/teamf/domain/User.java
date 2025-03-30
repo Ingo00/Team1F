@@ -1,8 +1,8 @@
 package com.teamf.domain;
 
 public class User {
-    private String username;
-    private String email;
+    private final String username;
+    private final String email;
 
     public User(String username, String email) {
         this.username = username;
