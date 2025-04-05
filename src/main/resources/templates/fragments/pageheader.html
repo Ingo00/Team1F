@@ -1,0 +1,11 @@
+<!-- fragments/pageHeader.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <section class="py-5 text-center bg-primary text-white" th:fragment="pageHeader(title, icon)">
+      <div class="container">
+        <h1><i class="fas" th:classappend="${icon}"></i> <span th:text="${title}">Page Title</span></h1>
+      </div>
+    </section>
+  </body>
+</html>

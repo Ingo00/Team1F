@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Booking Confirmation</title>
+  <div th:replace="~{fragments/head :: head}"></div>
+</head>
+<body id="page-top" class="bg-light">
+  <div id="layoutDefault">
+    <div id="layoutDefault_content">
+      <main>
+        <div th:replace="~{fragments/nav :: nav}"></div>
+        <div th:replace="~{fragments/pageHeader :: pageHeader(title='Booking Confirmed', icon='fa-check')}"></div>
+
+        <section class="container py-4">
+          <div class="alert alert-success" role="alert">
+            Booking confirmed for flight <strong th:text="${booking.flightNumber}"></strong>!
+          </div>
+          <p><strong>Username:</strong> <span th:text="${booking.username}"></span></p>
+          <p><strong>Booking ID:</strong> <span th:text="${booking.bookingId}"></span></p>
+          <p><strong>Date:</strong> <span th:text="${#dates.format(booking.bookingDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+        </section>
+      </main>
+    </div>
+    <div id="layoutDefault_footer">
+      <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+  </div>
+</body>
+</html>

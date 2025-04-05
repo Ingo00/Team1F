@@ -1,11 +1,16 @@
 package com.teamf.repository;
 
-import com.teamf.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.teamf.entity.User;
+
 
 /**
  * Interface for user storage operations.
  */
-public interface UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, String> {
 
     /**
      * Finds a user by their username.
@@ -14,18 +19,4 @@ public interface UserRepository {
      * @return the user if found, or null otherwise
      */
     User findByUsername(String username);
-
-    /**
-     * Saves a user to the repository.
-     *
-     * @param user the user to save
-     */
-    void save(User user);
-
-    /**
-     * Deletes a user from the repository.
-     *
-     * @param user the user to delete
-     */
-    void delete(User user);
 }

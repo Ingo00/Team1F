@@ -1,21 +1,24 @@
 package com.teamf.controller;
 
-import com.teamf.domain.User;
-import com.teamf.repository.UserRepository;
+import org.springframework.stereotype.Controller;
+
+import com.teamf.entity.User;
+import com.teamf.service.UserService;
 
 /**
  * Controller for managing user registration and deletion.
  */
+@Controller
 public class UserController {
-    private final UserRepository repository;
+    private final UserService userService;
 
     /**
-     * Constructs a new UserController with the given repository.
+     * Constructs a new UserController with the given user service.
      *
-     * @param repository the user repository dependency
+     * @param userService the user service dependency
      */
-    public UserController(UserRepository repository) {
-        this.repository = repository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -25,11 +28,7 @@ public class UserController {
      * @return true if registration is successful, false if the user already exists
      */
     public boolean registerUser(User user) {
-        if (repository.findByUsername(user.getUsername()) != null) {
-            return false;
-        }
-        repository.save(user);
-        return true;
+        return userService.registerUser(user);
     }
 
     /**
@@ -39,11 +38,16 @@ public class UserController {
      * @return true if the user was deleted, false if no such user exists
      */
     public boolean deleteUser(String username) {
-        User user = repository.findByUsername(username);
-        if (user == null) {
-            return false;
-        }
-        repository.delete(user);
-        return true;
+        return userService.deleteUser(username);
+    }
+
+    /**
+     * Retrieves a user by username.
+     *
+     * @param username the username of the user to retrieve
+     * @return the User if found, null otherwise
+     */
+    public User getUser(String username) {
+        return userService.getUser(username);
     }
 }
