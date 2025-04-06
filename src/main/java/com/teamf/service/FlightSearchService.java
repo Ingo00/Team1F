@@ -24,13 +24,25 @@ public class FlightSearchService {
     }
 
     /**
-     * Searches for flights between the given origin and destination.
+     * Searches for flights between the given origin and destination, ignoring case.
      *
      * @param origin the origin airport
      * @param destination the destination airport
      * @return a list of matching flights
      */
     public List<Flight> searchFlights(String origin, String destination) {
-        return flightRepository.findByOriginAndDestination(origin, destination);
+        return flightRepository.findByOriginIgnoreCaseAndDestinationIgnoreCase(
+            origin.trim(), destination.trim()
+        );
+    }
+
+    /**
+     * Retrieves a flight by its flight number.
+     *
+     * @param flightNumber the flight number
+     * @return the flight if found, or null otherwise
+     */
+    public Flight getFlightByNumber(String flightNumber) {
+        return flightRepository.findByFlightNumber(flightNumber);
     }
 }

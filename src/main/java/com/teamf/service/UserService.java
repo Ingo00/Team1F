@@ -6,14 +6,14 @@ import com.teamf.entity.User;
 import com.teamf.repository.UserRepository;
 
 /**
- * Service layer for handling user-related operations.
+ * Service layer responsible for user management operations.
  */
 @Service
 public class UserService {
     private final UserRepository repository;
 
     /**
-     * Constructs a UserService with the given user repository.
+     * Constructs the service with the given user repository.
      *
      * @param repository the user repository
      */
@@ -22,10 +22,10 @@ public class UserService {
     }
 
     /**
-     * Registers a new user if the username is not already in use.
+     * Registers a new user if the username is not already taken.
      *
      * @param user the user to register
-     * @return true if the user was successfully registered, false otherwise
+     * @return true if registration is successful, false otherwise
      */
     public boolean registerUser(User user) {
         if (repository.findByUsername(user.getUsername()) != null) {
@@ -36,16 +36,14 @@ public class UserService {
     }
 
     /**
-     * Deletes an existing user by username.
+     * Deletes a user by username.
      *
      * @param username the username of the user to delete
-     * @return true if the user was found and deleted, false otherwise
+     * @return true if deletion was successful, false otherwise
      */
     public boolean deleteUser(String username) {
         User user = repository.findByUsername(username);
-        if (user == null) {
-            return false;
-        }
+        if (user == null) return false;
         repository.delete(user);
         return true;
     }
@@ -53,10 +51,22 @@ public class UserService {
     /**
      * Retrieves a user by username.
      *
-     * @param username the username to look up
-     * @return the User if found, or null otherwise
+     * @param username the username to search
+     * @return the user if found, null otherwise
      */
     public User getUser(String username) {
         return repository.findByUsername(username);
+    }
+
+    /**
+     * Validates user login credentials.
+     *
+     * @param username the username
+     * @param password the password
+     * @return true if the credentials match, false otherwise
+     */
+    public boolean validateUserLogin(String username, String password) {
+        User user = repository.findByUsername(username);
+        return user != null && user.getPassword().equals(password);
     }
 }

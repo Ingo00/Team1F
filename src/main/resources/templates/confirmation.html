@@ -1,29 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Booking Confirmation</title>
-  <div th:replace="~{fragments/head :: head}"></div>
+    <title>Booking Confirmation</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body id="page-top" class="bg-light">
-  <div id="layoutDefault">
-    <div id="layoutDefault_content">
-      <main>
-        <div th:replace="~{fragments/nav :: nav}"></div>
-        <div th:replace="~{fragments/pageHeader :: pageHeader(title='Booking Confirmed', icon='fa-check')}"></div>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+    <div th:replace="~{fragments/pageheader :: pageHeader(title='Booking Confirmed', icon='fa-check-circle')}"></div>
 
-        <section class="container py-4">
-          <div class="alert alert-success" role="alert">
-            Booking confirmed for flight <strong th:text="${booking.flightNumber}"></strong>!
-          </div>
-          <p><strong>Username:</strong> <span th:text="${booking.username}"></span></p>
-          <p><strong>Booking ID:</strong> <span th:text="${booking.bookingId}"></span></p>
-          <p><strong>Date:</strong> <span th:text="${#dates.format(booking.bookingDate, 'yyyy-MM-dd HH:mm')}"></span></p>
-        </section>
-      </main>
+    <div class="container mt-4">
+        <h3>Your booking was successful!</h3>
+        <p><strong>Flight Number:</strong> <span th:text="${booking.flight.flightNumber}"></span></p>
+        <p><strong>From:</strong> <span th:text="${booking.flight.origin}"></span></p>
+        <p><strong>To:</strong> <span th:text="${booking.flight.destination}"></span></p>
+        <p><strong>Departure Time:</strong> <span th:text="${#strings.replace(booking.flight.departureTime, 'T', ' ')}"></span></p>
+        <p><strong>Booked At:</strong> <span th:text="${formattedBookingTime}">N/A</span></p>
     </div>
-    <div id="layoutDefault_footer">
-      <div th:replace="~{fragments/footer :: footer}"></div>
-    </div>
-  </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

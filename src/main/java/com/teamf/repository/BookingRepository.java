@@ -3,20 +3,19 @@ package com.teamf.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.teamf.entity.Booking;
 
-/**
- * Interface for booking storage and retrieval.
- */
-
-public interface BookingRepository extends JpaRepository<Booking, String> {
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     /**
-     * Retrieves all bookings made by a specific user.
+     * Finds all bookings made by a user, fetching flight details eagerly.
      *
      * @param username the username
-     * @return list of bookings
+     * @return list of bookings with flights
      */
-    List<Booking> findByUsername(String username);
+    @Query("SELECT b FROM Booking b JOIN FETCH b.flight WHERE LOWER(b.username) = LOWER(:username)")
+    List<Booking> findByUsernameIgnoreCase(@Param("username") String username);
 }

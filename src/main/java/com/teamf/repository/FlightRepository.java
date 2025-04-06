@@ -15,7 +15,7 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
      * @param destination the arrival airport
      * @return list of flights matching the criteria
      */
-    List<Flight> findByOriginAndDestination(String origin, String destination);
+    List<Flight> findByOriginIgnoreCaseAndDestinationIgnoreCase(String origin, String destination);
 
     /**
      * Finds a flight by its flight number.

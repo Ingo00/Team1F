@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.teamf.entity.User;
 
-
 /**
- * Interface for user storage operations.
+ * Repository interface for user entity operations.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -16,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, String> {
      * Finds a user by their username.
      *
      * @param username the username to search for
-     * @return the user if found, or null otherwise
+     * @return the user if found, null otherwise
      */
     User findByUsername(String username);
 }

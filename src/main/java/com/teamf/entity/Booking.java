@@ -1,58 +1,65 @@
 package com.teamf.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
- * Represents a booking made by a user for a specific flight.
+ * Entity representing a flight booking.
  */
 @Entity
+@Table(name = "bookings")
 public class Booking {
+
     @Id
-    private String bookingId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String username;
-    private String flightNumber;
-    private LocalDateTime bookingDate;
 
-    /**
-     * Constructs a new Booking.
-     *
-     * @param bookingId the booking identifier
-     * @param username the user who made the booking
-     * @param flightNumber the flight number being booked
-     * @param bookingDate the date the booking was made
-     */
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "flight_number", referencedColumnName = "flight_number")
+    private Flight flight;
 
-    // Constructor for JPA
-    protected Booking() {
-        this.bookingId = "";
-        this.username = "";
-        this.flightNumber = "";
-        this.bookingDate = LocalDateTime.now();
-    }
+    @Column(name = "seats_booked", nullable = false)
+    private int seatsBooked;
 
-    public Booking(String bookingId, String username, String flightNumber, LocalDateTime bookingDate) {
-        this.bookingId = bookingId;
+    @Column(name = "booking_time", nullable = false)
+    private Timestamp bookingTime;
+
+    public Booking() {}
+
+    public Booking(String username, Flight flight, int seatsBooked, Timestamp bookingTime) {
         this.username = username;
-        this.flightNumber = flightNumber;
-        this.bookingDate = bookingDate;
+        this.flight = flight;
+        this.seatsBooked = seatsBooked;
+        this.bookingTime = bookingTime;
     }
 
-    public String getBookingId() {
-        return bookingId;
-    }
+    public Long getId() { return id; }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
-    public String getFlightNumber() {
-        return flightNumber;
-    }
+    public void setUsername(String username) { this.username = username; }
 
-    public LocalDateTime getBookingDate() {
-        return bookingDate;
-    }
+    public Flight getFlight() { return flight; }
+
+    public void setFlight(Flight flight) { this.flight = flight; }
+
+    public int getSeatsBooked() { return seatsBooked; }
+
+    public void setSeatsBooked(int seatsBooked) { this.seatsBooked = seatsBooked; }
+
+    public Timestamp getBookingTime() { return bookingTime; }
+
+    public void setBookingTime(Timestamp bookingTime) { this.bookingTime = bookingTime; }
 }
