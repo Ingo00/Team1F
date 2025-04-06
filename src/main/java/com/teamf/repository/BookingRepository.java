@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.teamf.entity.Booking;
 
+/**
+ * Repository interface for managing {@link Booking} entities.
+ */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     /**

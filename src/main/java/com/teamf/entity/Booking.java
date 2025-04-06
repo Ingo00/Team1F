@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Entity representing a flight booking.
+ * Entity representing a booking made by a user for a specific flight.
  */
 @Entity
 @Table(name = "bookings")
@@ -36,8 +36,19 @@ public class Booking {
     @Column(name = "booking_time", nullable = false)
     private Timestamp bookingTime;
 
+    /**
+     * Default constructor required by JPA.
+     */
     public Booking() {}
 
+    /**
+     * Constructs a new booking.
+     *
+     * @param username     the username who made the booking
+     * @param flight       the flight that was booked
+     * @param seatsBooked  number of seats booked
+     * @param bookingTime  timestamp of the booking
+     */
     public Booking(String username, Flight flight, int seatsBooked, Timestamp bookingTime) {
         this.username = username;
         this.flight = flight;

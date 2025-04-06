@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.teamf.entity.User;
 
 /**
- * Repository interface for user entity operations.
+ * Repository interface for accessing {@link Flight} entities.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {

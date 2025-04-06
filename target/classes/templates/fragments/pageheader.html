@@ -2,6 +2,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
+    <!--
+      Page header fragment for title + icon.
+      Accepts two variables:
+      - title: the title of the page
+      - icon: the font-awesome icon class
+    -->
     <section class="py-5 text-center bg-primary text-white" th:fragment="pageHeader(title, icon)">
       <div class="container">
         <h1><i class="fas" th:classappend="${icon}"></i> <span th:text="${title}">Page Title</span></h1>

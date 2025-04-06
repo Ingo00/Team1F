@@ -20,7 +20,7 @@ import com.teamf.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 
 /**
- * Controller for handling flight bookings and viewing bookings.
+ * Controller for handling creation and viewing of flight bookings.
  */
 @Controller
 public class BookingController {
@@ -34,7 +34,11 @@ public class BookingController {
     }
 
     /**
-     * Displays the user's current bookings.
+     * Displays a list of bookings made by the currently logged-in user.
+     *
+     * @param session the HTTP session containing the logged-in user
+     * @param model   the model to populate with booking data
+     * @return the bookings view or redirects to login if unauthenticated
      */
     @GetMapping("/bookings")
     public String bookingsPage(HttpSession session, Model model) {
@@ -48,19 +52,18 @@ public class BookingController {
                 .filter(b -> b.getFlight() != null)
                 .collect(Collectors.toList());
 
-        System.out.println("== DEBUG BOOKINGS ==");
-        System.out.println("User: " + user.getUsername());
-        System.out.println("Bookings found: " + bookings.size());
-        for (Booking b : bookings) {
-            System.out.println(" - " + b.getFlight().getFlightNumber());
-        }
-
         model.addAttribute("bookings", bookings);
         return "bookings";
     }
 
     /**
-     * Handles booking a flight from the UI and redirects to confirmation page.
+     * Creates a booking for a selected flight and redirects to the confirmation page.
+     *
+     * @param flightNumber the flight number to book
+     * @param seats        number of seats to book
+     * @param session      the HTTP session containing the logged-in user
+     * @param model        the model to pass confirmation data
+     * @return the confirmation view or redirects on error
      */
     @PostMapping("/book")
     public String bookFlight(@RequestParam String flightNumber,
@@ -82,7 +85,6 @@ public class BookingController {
         Booking booking = bookingService.createBooking(user.getUsername(), flight, seats);
         model.addAttribute("booking", booking);
 
-        // Format bookingTime in backend instead of Thymeleaf
         String formattedTime = booking.getBookingTime()
                 .toLocalDateTime()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));

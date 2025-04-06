@@ -1,4 +1,9 @@
+// booking.js
 
+/**
+ * Handles the booking form submission.
+ * Retrieves flight ID from localStorage and sends booking data to server.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const flightId = localStorage.getItem("selectedFlightId");
   const form = document.getElementById("booking-form");
@@ -6,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
 

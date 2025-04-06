@@ -5,13 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 /**
- * Represents a flight with route and seat availability information.
+ * Represents a flight with its route, timing, and seat availability.
  */
 @Entity
 public class Flight {
 
     @Id
-    @Column(name = "flight_number") // Matches schema.sql
+    @Column(name = "flight_number")
     private String flightNumber;
 
     @Column(name = "origin")
@@ -27,7 +27,7 @@ public class Flight {
     private int availableSeats;
 
     /**
-     * Required by JPA.
+     * Default constructor required by JPA.
      */
     protected Flight() {
         this.flightNumber = "";
@@ -37,6 +37,15 @@ public class Flight {
         this.availableSeats = 0;
     }
 
+    /**
+     * Constructs a new flight.
+     *
+     * @param flightNumber   unique flight identifier
+     * @param origin         departure city
+     * @param destination    arrival city
+     * @param departureTime  flight departure timestamp (as String)
+     * @param availableSeats number of available seats on the flight
+     */
     public Flight(String flightNumber, String origin, String destination,
                   String departureTime, int availableSeats) {
         this.flightNumber = flightNumber;
@@ -66,6 +75,11 @@ public class Flight {
         return availableSeats;
     }
 
+    /**
+     * Reduces the number of available seats.
+     *
+     * @param amount the number of seats to subtract
+     */
     public void reduceAvailableSeats(int amount) {
         this.availableSeats -= amount;
     }

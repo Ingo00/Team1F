@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Represents a user in the system.
+ * Represents a registered user of the system.
  */
 @Entity
 @Table(name = "users")
@@ -17,14 +17,16 @@ public class User {
     private String email;
     private String password;
 
-    // Public no-args constructor required by JPA
+    /**
+     * Default constructor required by JPA.
+     */
     public User() {}
 
     /**
-     * Constructs a new user with the given username, email, and password.
+     * Constructs a new user account.
      *
-     * @param username the user's username
-     * @param email the user's email
+     * @param username the user's unique username
+     * @param email    the user's email
      * @param password the user's password
      */
     public User(String username, String email, String password) {

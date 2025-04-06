@@ -13,18 +13,13 @@ import com.teamf.service.UserService;
 import jakarta.servlet.http.HttpSession;
 
 /**
- * Controller handling user registration, login, session management, and account display.
+ * Controller handling user registration, login, logout, and session-based access.
  */
 @Controller
 public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Constructs the controller with a user service.
-     *
-     * @param userService the user service
-     */
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -32,7 +27,7 @@ public class UserController {
     /**
      * Displays the registration form.
      *
-     * @param model the model for the form
+     * @param model model used to bind the form
      * @return the register template
      */
     @GetMapping("/register")
@@ -42,11 +37,11 @@ public class UserController {
     }
 
     /**
-     * Handles user registration.
+     * Handles the form submission for user registration.
      *
-     * @param user the user submitted via form
-     * @param model the model for errors
-     * @return redirect to login on success or back to register on failure
+     * @param user  the user from the form
+     * @param model model used to return errors if needed
+     * @return redirects to login if successful, else back to registration
      */
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model) {
@@ -61,7 +56,7 @@ public class UserController {
     /**
      * Displays the login form.
      *
-     * @return the login template
+     * @return the login view
      */
     @GetMapping("/login")
     public String showLoginForm() {
@@ -69,13 +64,13 @@ public class UserController {
     }
 
     /**
-     * Authenticates a user.
+     * Authenticates user credentials and stores session data.
      *
-     * @param username the username
-     * @param password the password
-     * @param session the HTTP session
-     * @param model the model for errors
-     * @return redirect to account on success or back to login on failure
+     * @param username the provided username
+     * @param password the provided password
+     * @param session  HTTP session for storing user
+     * @param model    model for error messaging
+     * @return redirects to homepage or back to login on failure
      */
     @PostMapping("/login")
     public String loginUser(@RequestParam String username,
@@ -92,11 +87,11 @@ public class UserController {
     }
 
     /**
-     * Displays the logged-in user's account.
+     * Displays the logged-in user's account page.
      *
-     * @param session the HTTP session
-     * @param model the model containing user data
-     * @return the account view or redirect to login if unauthenticated
+     * @param session HTTP session containing the user
+     * @param model   model to populate with user data
+     * @return account view or redirect to login if unauthenticated
      */
     @GetMapping("/account")
     public String accountPage(HttpSession session, Model model) {
@@ -109,13 +104,12 @@ public class UserController {
     /**
      * Logs the user out by invalidating the session.
      *
-     * @param session the HTTP session
-     * @return redirect to login
+     * @param session the HTTP session to invalidate
+     * @return redirect to login page
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
     }
-
 }

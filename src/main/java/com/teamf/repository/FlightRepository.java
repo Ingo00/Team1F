@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.teamf.entity.Flight;
 
+/**
+ * Repository interface for accessing {@link Flight} entities.
+ */
 public interface FlightRepository extends JpaRepository<Flight, String> {
 
     /**

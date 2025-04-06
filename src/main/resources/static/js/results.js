@@ -1,4 +1,9 @@
+// results.js
 
+/**
+ * Displays search results stored in localStorage and
+ * allows user to select a flight to book.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const resultsContainer = document.getElementById("results");
   const flights = JSON.parse(localStorage.getItem("searchResults")) || [];
@@ -21,6 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+/**
+ * Stores selected flight ID in localStorage and navigates to booking page.
+ *
+ * @param {number} flightId - ID of the selected flight
+ */
 function bookFlight(flightId) {
   localStorage.setItem("selectedFlightId", flightId);
   window.location.href = "/book";
